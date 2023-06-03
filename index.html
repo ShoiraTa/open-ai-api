@@ -8,49 +8,77 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700&family=Poppins:wght@400;700&display=swap"
 		rel="stylesheet">
-		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="./index.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	</head>
 
 	<body>
-		<header>
-			<img src="./images/logo-movie.png" alt="MoviePitch">
-			<a href="/"><span>Movie</span>Pitch</a>
-		</header>
-		<main>	
-			<!-- The Setup -->	
-			<section id="setup-container">
-				<div class="setup-inner">
-					<img src="/images/movieboss.png">
-					<div class="speech-bubble-ai" id="speech-bubble-ai">
-						<p id="movie-boss-text">
-							Give me a one-sentence concept and I'll give you an eye-catching title, a synopsis the studios will love, a movie poster...
-							AND choose the cast!
-						</p>
+		<div class="buttons-container" id="buttons-container">
+			<div>
+				<button id="show-movie-pitch">Movie Pitch</button>
+				<button id="show-chat-bot">Chat Bot</button>
+			</div>
+		</div>
+
+		<div class="movie-pitch-body d-none" id ="movie-pitch-body">
+			<div class="header">
+				<img src="./images/logo-movie.png" alt="MoviePitch">
+				<a href="/"><span>Movie</span>Pitch</a>
+			</div>
+			<div>	
+				<!-- The Setup -->	
+				<section id="setup-container">
+					<div class="setup-inner">
+						<img src="/images/movieboss.png">
+						<div class="speech-bubble-ai" id="speech-bubble-ai">
+							<p id="movie-boss-text">
+								Give me a one-sentence concept and I'll give you an eye-catching title, a synopsis the studios will love, a movie poster...
+								AND choose the cast!
+							</p>
+						</div>
 					</div>
+					<div class="setup-inner setup-input-container" id="setup-input-container">
+						<textarea id="setup-textarea" placeholder="An evil genius wants to take over the world using AI."></textarea>
+						<button class="send-btn" id="send-movie-btn" aria-label="send">
+								<img src="images/send-btn-icon.png" alt="send">
+						</button>
+					</div>
+				</section>	
+				<!-- The Output -->	
+				<section class="output-container" id="output-container">
+					<div id="output-img-container" class="output-img-container"></div>
+					<h1 id="output-title"></h1>
+					<h2 id="output-stars"></h2>
+					<p id="output-text"></p>
+				</section>
+			</div>	
+			<script type="module" src="./app.js"></script>
+	</div>
+
+	<div class="chat-bot-body d-none" id ="chat-bot-body">
+		<section class="chatbot-container">
+			<div class="chatbot-header">
+				<img src="images/owl-logo.png" class="logo">
+				<h1>KnowItAll</h1>
+				<h2>Ask me anything!</h2>
+				<p class="supportId">User ID: 2344</p>
+			</div>
+			<div class="chatbot-conversation-container" id="chatbot-conversation">
+				<div class="speech speech-ai">
+					How can I help you?
 				</div>
-				<div class="setup-inner setup-input-container" id="setup-input-container">
-					<textarea id="setup-textarea" placeholder="An evil genius wants to take over the world using AI."></textarea>
-					<button class="send-btn" id="send-btn" aria-label="send">
-							<img src="images/send-btn-icon.png" alt="send">
-					</button>
-				</div>
-			</section>	
-			<!-- The Output -->	
-			<section class="output-container" id="output-container">
-				<div id="output-img-container" class="output-img-container"></div>
-				<h1 id="output-title"></h1>
-				<h2 id="output-stars"></h2>
-				<p id="output-text"></p>
-			</section>
-		</main>	
-		<footer>
-			&copy; 2023 MoviePitch All rights reserved
-		</footer>
-		<script type="module" src="index.js"></script>
-  
+			</div>
+			<form id="form" class="chatbot-input-container">
+				<input name="user-input" type="text" id="user-input" required>
+				<button id="submit-btn" class="submit-btn">
+					<img 
+						src="images/send-btn-icon.png" 
+						class="send-btn-icon"
+					>
+				</button>
+			</form>
+		</section>
+	</div>
 
-
-	</body>
-
+</body>
 </html>
