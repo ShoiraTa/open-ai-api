@@ -6,7 +6,7 @@ export default  class ChatBot {
     this.url = "https://api.openai.com/v1/chat/completions"
     this.chatbotConversation = document.getElementById('chatbot-conversation')
     this.userInput = document.getElementById('user-input')
-    this.userInputValue = this.userInput.value
+
     this.headers= {   
       'Content-Type': 'application/json',   
       'Authorization':`Bearer ${process.env.OPEN_AI_KEY}` 
@@ -14,19 +14,42 @@ export default  class ChatBot {
     this.database = new Database
     this.conversationArr = []
     this.newSpeechBubble = document.createElement('div')
+    this.loading = false
+  }
+
+  load = () => {
+    this.loading = true
+    this.getConversation(this.loadConversation)
+  }
+
+  loadConversation = (arr) => {
+    arr.forEach((obj) => {
+      if (obj.role == "user"){
+        this.createSpeechBubble("human", obj.content)
+      } 
+      else {
+        this.createSpeechBubble("ai", obj.content)
+      } 
+    })
+  }
+
+  clearConversation = () => {
+    this.database.clearConversation()
+    location.reload()
   }
 
   init = () => {
-    this.database.pushConversation({role:"user", content: this.userInputValue})
+    this.loading = false
+    this.database.pushConversation({role:"user", content: this.userInput.value})
     this.createSpeechBubble("human", this.userInput.value)
-    this.userInput.value = ''
-    this.getConversation()
+    this.userInput.value=''
+    this.getConversation(this.ask_question)
   }
 
-  getConversation = () => {
+  getConversation = (callback) => {
     this.database.getConversation().then((conversation) => {
       this.conversationArr = conversation 
-      this.ask_question()
+      callback(conversation)
     }).catch((error) => {
       console.log("Error retrieving conversation:", error);
     });
@@ -38,7 +61,6 @@ export default  class ChatBot {
       messages: this.conversationArr,
       presence_penalty: 1
     }
-    console.log(body)
     axios.post(this.url, body, { headers: this.headers })
     .then(res => { 
       this.database.pushConversation(res.data.choices[0].message)
@@ -55,7 +77,7 @@ export default  class ChatBot {
     }
     else {
       newSpeechBubble.classList.add('speech', 'speech-human')
-      newSpeechBubble.textContent = this.userInput.value
+      newSpeechBubble.textContent = text
       this.chatbotConversation.scrollTop = this.chatbotConversation.scrollHeight
     }
     this.chatbotConversation.appendChild(newSpeechBubble)
@@ -64,14 +86,19 @@ export default  class ChatBot {
   aiOutput(text, speechBubble) {
     let i = 0
 
-    const interval = setInterval(() => {
-      speechBubble.textContent += text.slice(i-1, i)
-      if (text.length === i) {
-          clearInterval(interval)
-          speechBubble.classList.remove('blinking-cursor')
-      }
-      i++
-      this.chatbotConversation.scrollTop = this.chatbotConversation.scrollHeight
-    }, 50)
+    if (this.loading == false){
+      const interval = setInterval(() => {
+        speechBubble.textContent += text.slice(i-1, i)
+        if (text.length === i) {
+            clearInterval(interval)
+            speechBubble.classList.remove('blinking-cursor')
+        }
+        i++
+        this.chatbotConversation.scrollTop = this.chatbotConversation.scrollHeight
+      }, 50)
+    }
+    else{
+      speechBubble.textContent = text
+    }
   }
 }

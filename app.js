@@ -15,6 +15,18 @@ document.addEventListener('submit', (e) => {
   chatBot.init()
 })
 
+document.getElementById("clear-btn").addEventListener('click', (e) => {
+  e.preventDefault()
+  let chatBot = new ChatBot();
+  chatBot.clearConversation()
+})
+
+document.addEventListener('DOMContentLoaded', (e) => {
+  console.log("helllo")
+  let chatBot = new ChatBot();
+  chatBot.load()
+})
+
 document.getElementById('show-movie-pitch').addEventListener("click", () => {
   document.getElementById('movie-pitch-body').classList.remove("d-none")
   buttonsContainer.classList.add("d-none")

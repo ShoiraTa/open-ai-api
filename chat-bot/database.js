@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+import { getDatabase, ref, push, get, remove } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
 export default class Database {
   constructor(){
@@ -16,12 +16,15 @@ export default class Database {
     push(this.conversationDb, value)
   }
 
+  clearConversation = () => {
+    remove(this.conversationDb)
+  }
+
   getConversation = async () => {
     try {
       const snapshot = await get(this.conversationDb);
       if (snapshot.exists()) {
         this.conversationArr = Object.values(snapshot.val());
-        console.log(this.conversationArr);
         this.conversationArr.unshift({
           role: 'system',
           content: "you are an assistant that gives short answers"
