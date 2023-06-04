@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div class="buttons-container" id="buttons-container">
+		<div class="buttons-container d-none" id="buttons-container">
 			<div>
 				<button id="show-movie-pitch">Movie Pitch</button>
 				<button id="show-chat-bot">Chat Bot</button>
@@ -55,13 +55,14 @@
 			<script type="module" src="./app.js"></script>
 	</div>
 
-	<div class="chat-bot-body d-none" id ="chat-bot-body">
+	<div class="chat-bot-body" id ="chat-bot-body">
 		<section class="chatbot-container">
 			<div class="chatbot-header">
 				<img src="images/owl-logo.png" class="logo">
 				<h1>KnowItAll</h1>
 				<h2>Ask me anything!</h2>
 				<p class="supportId">User ID: 2344</p>
+				<button class="clear-btn" id="clear-btn">start over</button>
 			</div>
 			<div class="chatbot-conversation-container" id="chatbot-conversation">
 				<div class="speech speech-ai">

@@ -3,9 +3,16 @@ import ChatBot from './chat-bot/chat-bot.js'
 
 const buttonsContainer = document.getElementById("buttons-container")
 
+
 document.getElementById("send-movie-btn").addEventListener("click", () => {
-  const moviePitch = new MoviePitch()
+  let moviePitch = moviePitch || new MoviePitch();
   moviePitch.init()
+})
+
+document.addEventListener('submit', (e) => {
+  e.preventDefault()
+  let chatBot = new ChatBot();
+  chatBot.init()
 })
 
 document.getElementById('show-movie-pitch').addEventListener("click", () => {

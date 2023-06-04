@@ -84,8 +84,6 @@ export default class MoviePitch {
     return new Promise((resolve, reject) => {
       axios.post(this.url, body, { headers: this.headers })
         .then(res => {
-          console.log(res);
-          console.log(el);
           el.innerHTML = res.data.choices[0].text;
           resolve(res.data.choices[0].text);
         })
